@@ -358,7 +358,7 @@ End of functions from https://github.com/client9/shlib
 EOF
 
 PROJECT_NAME="structor"
-OWNER=traefik
+OWNER=valentinEmpy
 REPO="structor"
 BINARY=structor
 FORMAT=tar.gz

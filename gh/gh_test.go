@@ -8,14 +8,14 @@ import (
 )
 
 func TestGetLatestReleaseTagName(t *testing.T) {
-	tagName, err := GetLatestReleaseTagName("traefik", "structor")
+	tagName, err := GetLatestReleaseTagName("api.github.com", "", "traefik", "structor")
 
 	require.NoError(t, err)
 	assert.Regexp(t, `v\d+.\d+(.\d+)?`, tagName)
 }
 
 func TestGetLatestReleaseTagName_Errors(t *testing.T) {
-	_, err := GetLatestReleaseTagName("error", "error")
+	_, err := GetLatestReleaseTagName("api.github.com", "", "error", "error")
 
-	assert.EqualError(t, err, `failed to get latest release tag name on GitHub ("https://github.com/error/error/releases/latest"), status: 404 Not Found`)
+	assert.EqualError(t, err, `failed to get latest release tag name on GitHub ("https://api.github.com/repos/error/error/releases/latest"), status: 404 Not Found`)
 }

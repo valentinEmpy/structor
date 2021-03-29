@@ -12,6 +12,7 @@ import (
 )
 
 const (
+	defaultGithubURL       = "api.github.com"
 	defaultDockerImageName = "doc-site"
 	defaultDockerfileName  = "docs.Dockerfile"
 )
@@ -47,6 +48,8 @@ func main() {
 	}
 
 	flags := rootCmd.Flags()
+	flags.StringVar(&cfg.GithubURL, "github-api-url", defaultGithubURL, "Use this GitHub API url when accessing the repository.")
+	flags.StringVar(&cfg.GithubToken, "github-token", "", "Use this Bearer token for Github requests.")
 	flags.StringVarP(&cfg.Owner, "owner", "o", "", "Repository owner. [required]")
 	flags.StringVarP(&cfg.RepositoryName, "repo-name", "r", "", "Repository name. [required]")
 

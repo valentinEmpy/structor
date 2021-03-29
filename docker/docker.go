@@ -53,6 +53,18 @@ func buildImageFullName(imageName, tagName string) string {
 
 // GetDockerfileFallback Downloads and creates the DockerfileInformation of the Dockerfile fallback.
 func GetDockerfileFallback(dockerfileURL, imageName string) (DockerfileInformation, error) {
+	if _, errStat := os.Stat(dockerfileURL); errStat == nil {
+		content, err := ioutil.ReadFile(dockerfileURL)
+		if err != nil {
+			return DockerfileInformation{}, fmt.Errorf("failed to read Requirements file: %w", err)
+		}
+		return DockerfileInformation{
+			Name:      fmt.Sprintf("%v.Dockerfile", time.Now().UnixNano()),
+			Content:   content,
+			ImageName: imageName,
+		}, nil
+	}
+
 	dockerFileContent, err := file.Download(dockerfileURL)
 	if err != nil {
 		return DockerfileInformation{}, fmt.Errorf("failed to download Dockerfile: %w", err)

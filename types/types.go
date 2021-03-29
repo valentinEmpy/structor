@@ -5,6 +5,7 @@ type NoOption struct{}
 
 // Configuration task configuration.
 type Configuration struct {
+	GithubURL              string     `long:"github-api-url" description:"Use this GitHub API url when accessing the repository."`
 	Owner                  string     `short:"o" description:"Repository owner. [required]"`
 	RepositoryName         string     `short:"r" long:"repo-name" description:"Repository name. [required]"`
 	Debug                  bool       `long:"debug" description:"Debug mode."`
@@ -17,6 +18,7 @@ type Configuration struct {
 	RequirementsURL        string     `long:"rqts-url" description:"Use this requirements.txt to merge with the current requirements.txt. Can be a file path."`
 	NoCache                bool       `long:"no-cache" description:"Set to 'true' to disable the Docker build cache."`
 	ForceEditionURI        bool       `long:"force-edit-url" description:"Add a dedicated edition URL for each version."`
+	GithubToken            string     `long:"github-token" description:"Use this Bearer token for Github requests."`
 }
 
 // MenuFiles menu template files references.

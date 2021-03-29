@@ -16,19 +16,22 @@ import (
 
 func Test_getLatestReleaseTagName(t *testing.T) {
 	testCases := []struct {
-		desc                  string
-		owner, repositoryName string
-		envVarLatestTag       string
-		expected              string
+		desc                   string
+		githubURL, githubToken string
+		owner, repositoryName  string
+		envVarLatestTag        string
+		expected               string
 	}{
 		{
 			desc:           "without env var override",
+			githubURL:      "api.github.com",
 			owner:          "traefik",
 			repositoryName: "structor",
 			expected:       `v\d+.\d+(.\d+)?`,
 		},
 		{
 			desc:            "with env var override",
+			githubURL:       "api.github.com",
 			owner:           "traefik",
 			repositoryName:  "structor",
 			envVarLatestTag: "foo",
@@ -43,7 +46,7 @@ func Test_getLatestReleaseTagName(t *testing.T) {
 			require.NoError(t, err)
 			defer func() { _ = os.Unsetenv(envVarLatestTag) }()
 
-			tagName, err := getLatestReleaseTagName(test.owner, test.repositoryName)
+			tagName, err := getLatestReleaseTagName(test.githubURL, test.githubToken, test.owner, test.repositoryName)
 			require.NoError(t, err)
 
 			assert.Regexp(t, test.expected, tagName)

@@ -59,7 +59,7 @@ func process(workDir string, config *types.Configuration) error {
 		return fmt.Errorf("failed to get requirements content: %w", err)
 	}
 
-	latestTagName, err := getLatestReleaseTagName(config.Owner, config.RepositoryName)
+	latestTagName, err := getLatestReleaseTagName(config.GithubURL, config.GithubToken, config.Owner, config.RepositoryName)
 	if err != nil {
 		return fmt.Errorf("failed to get latest release: %w", err)
 	}
@@ -120,13 +120,13 @@ func process(workDir string, config *types.Configuration) error {
 	return nil
 }
 
-func getLatestReleaseTagName(owner, repositoryName string) (string, error) {
+func getLatestReleaseTagName(githubURL, githubToken, owner, repositoryName string) (string, error) {
 	latest := os.Getenv(envVarLatestTag)
 	if len(latest) > 0 {
 		return latest, nil
 	}
 
-	return gh.GetLatestReleaseTagName(owner, repositoryName)
+	return gh.GetLatestReleaseTagName(githubURL, githubToken, owner, repositoryName)
 }
 
 func getBranches(experimentalBranchName string, excludedBranches []string, debug bool) ([]string, error) {
